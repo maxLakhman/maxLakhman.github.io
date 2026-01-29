@@ -1,47 +1,896 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
-    <title>Max Singh-Lakhman's Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Max Singh-Lakhman — Software Developer</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-bg: #fafaf9;
+            --color-text: #1c1917;
+            --color-text-muted: #78716c;
+            --color-accent: #0a0a0a;
+            --color-border: #e7e5e4;
+            --color-card: #ffffff;
+            --spacing-unit: 8px;
+            --font-serif: 'Newsreader', Georgia, serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-serif);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            font-size: 17px;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(250, 250, 249, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--color-border);
+            z-index: 1000;
+            animation: slideDown 0.6s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 4);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav .logo {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--color-accent);
+            text-transform: uppercase;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: calc(var(--spacing-unit) * 5);
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--color-text-muted);
+            font-size: 15px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--color-accent);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 calc(var(--spacing-unit) * 4);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: calc(var(--spacing-unit) * 10);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero-label {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+        
+        .hero h1 {
+            font-size: clamp(48px, 8vw, 84px);
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: calc(var(--spacing-unit) * 4);
+            letter-spacing: -1px;
+            animation: fadeInUp 1s ease 0.3s backwards;
+        }
+        
+        .hero h1 em {
+            font-style: italic;
+            font-weight: 300;
+        }
+        
+        .hero-description {
+            font-size: 21px;
+            color: var(--color-text-muted);
+            max-width: 600px;
+            margin-bottom: calc(var(--spacing-unit) * 5);
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+        
+        .hero-meta {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 6);
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--color-text-muted);
+            animation: fadeInUp 1s ease 0.5s backwards;
+        }
+        
+        .hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: calc(var(--spacing-unit) * 1);
+        }
+        
+        /* Section */
+        section {
+            padding: calc(var(--spacing-unit) * 15) 0;
+            border-top: 1px solid var(--color-border);
+        }
+        
+        .section-header {
+            margin-bottom: calc(var(--spacing-unit) * 8);
+        }
+        
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+        
+        .section-title {
+            font-size: clamp(36px, 5vw, 48px);
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+        
+        /* About */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: calc(var(--spacing-unit) * 8);
+            margin-bottom: calc(var(--spacing-unit) * 10);
+        }
+        
+        .about-text p {
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            font-size: 19px;
+        }
+        
+        .about-text p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: calc(var(--spacing-unit) * 4);
+        }
+        
+        .stat-item {
+            padding: calc(var(--spacing-unit) * 3);
+            background: var(--color-card);
+            border: 1px solid var(--color-border);
+            border-radius: 2px;
+        }
+        
+        .stat-number {
+            font-family: var(--font-mono);
+            font-size: 32px;
+            font-weight: 500;
+            margin-bottom: calc(var(--spacing-unit) * 1);
+            color: var(--color-accent);
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--color-text-muted);
+        }
+        
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: calc(var(--spacing-unit) * 2);
+            margin-bottom: calc(var(--spacing-unit) * 6);
+        }
+        
+        .skill-tag {
+            padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 3);
+            background: var(--color-card);
+            border: 1px solid var(--color-border);
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .skill-tag:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-2px);
+        }
+        
+        .skills-description {
+            font-size: 17px;
+            color: var(--color-text-muted);
+            line-height: 1.8;
+        }
+        
+        /* Experience */
+        .experience-list {
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--spacing-unit) * 8);
+        }
+        
+        .experience-item {
+            padding: calc(var(--spacing-unit) * 5);
+            background: var(--color-card);
+            border: 1px solid var(--color-border);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .experience-item:hover {
+            border-color: var(--color-accent);
+            transform: translateX(4px);
+        }
+        
+        .experience-header {
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+        
+        .experience-title {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: calc(var(--spacing-unit) * 1);
+        }
+        
+        .experience-company {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .experience-item ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--spacing-unit) * 2);
+        }
+        
+        .experience-item li {
+            padding-left: calc(var(--spacing-unit) * 3);
+            position: relative;
+            color: var(--color-text-muted);
+            font-size: 16px;
+        }
+        
+        .experience-item li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+        }
+        
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: calc(var(--spacing-unit) * 4);
+        }
+        
+        .project-card {
+            padding: calc(var(--spacing-unit) * 5);
+            background: var(--color-card);
+            border: 1px solid var(--color-border);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-card:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-4px);
+        }
+        
+        .project-category {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+        
+        .project-title {
+            font-size: 22px;
+            font-weight: 400;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+        
+        .project-description {
+            font-size: 15px;
+            color: var(--color-text-muted);
+            line-height: 1.7;
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            flex-grow: 1;
+        }
+        
+        .project-tags {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 1);
+            flex-wrap: wrap;
+        }
+        
+        .project-tag {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            padding: calc(var(--spacing-unit) * 1) calc(var(--spacing-unit) * 2);
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 2px;
+        }
+        
+        /* Contact */
+        .contact-content {
+            max-width: 700px;
+        }
+        
+        .contact-text {
+            font-size: 21px;
+            margin-bottom: calc(var(--spacing-unit) * 6);
+            line-height: 1.7;
+        }
+        
+        .contact-links {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 4);
+            flex-wrap: wrap;
+        }
+        
+        .contact-link {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--color-text);
+            text-decoration: none;
+            padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 3);
+            border: 1px solid var(--color-border);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .contact-link:hover {
+            background: var(--color-accent);
+            color: var(--color-card);
+            border-color: var(--color-accent);
+        }
+        
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--color-border);
+            padding: calc(var(--spacing-unit) * 5) 0;
+            margin-top: calc(var(--spacing-unit) * 15);
+        }
+        
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        footer p {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--color-text-muted);
+        }
+        
+        .back-to-top {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--color-text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            color: var(--color-accent);
+        }
+        
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            width: 24px;
+            height: 20px;
+            position: relative;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: var(--color-accent);
+            position: absolute;
+            left: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-toggle span:nth-child(1) { top: 0; }
+        .menu-toggle span:nth-child(2) { top: 9px; }
+        .menu-toggle span:nth-child(3) { top: 18px; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav .container {
+                padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 3);
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 57px;
+                left: 0;
+                right: 0;
+                background: rgba(250, 250, 249, 0.98);
+                backdrop-filter: blur(12px);
+                flex-direction: column;
+                padding: calc(var(--spacing-unit) * 4);
+                gap: calc(var(--spacing-unit) * 3);
+                border-bottom: 1px solid var(--color-border);
+                display: none;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            .hero {
+                padding-top: calc(var(--spacing-unit) * 15);
+            }
+            
+            .hero h1 {
+                font-size: 48px;
+            }
+            
+            .hero-description {
+                font-size: 18px;
+            }
+            
+            .hero-meta {
+                flex-direction: column;
+                gap: calc(var(--spacing-unit) * 2);
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: calc(var(--spacing-unit) * 6);
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            footer .container {
+                flex-direction: column;
+                gap: calc(var(--spacing-unit) * 2);
+                text-align: center;
+            }
+        }
+        
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .fade-in-delay-1 { animation-delay: 0.1s; }
+        .fade-in-delay-2 { animation-delay: 0.2s; }
+        .fade-in-delay-3 { animation-delay: 0.3s; }
+    </style>
 </head>
 <body>
-    <div class="main-nav">
-        <ul class="nav">
-            <li class="name">Max Lakhman</li>
-            <li> <a href="index.html" >Home</a></li>
-            <li> <a href="experience.html">Experience</a></li>
-        </ul>
-    </div>
-
-    <header>
-        <img src="images/IMG_3346.jpg" alt="A glance at me!" class="profile-image">
-        <h1 class="tag name">Hello! I’m Max, welcome to my portfolio!</h1>
-        <p class="tag location">I currently live in Buffalo, New York. I'm open to relocation</p>
-    </header>
-
-    <main class = "cards">
-        <div class="card">
-            <h2>Me at a glance.</h2>
-            <p>I want to be a programmer with an emphasis on front-end development. I have both front-end and back-end experience, and my favorite part of programming is the satisfaction from seeing the finished product of my hard work.</p>
-            <p>I knew i wanted to be a software developer when i took my first programming elective in high school. After learning basic python syntax and working on some basic applications I knew I wanted to do this for the rest of my life. </p>
-        </div>
-        <div class = "card">
-            <h2> My goals at a glance </h2>
-            <p> My goals are to increase my proficiency, skill and knowledge in the fields listed below. However, I also want to learn new skills and grow even more versitle as a designer and developer. </p>
-            <ul class="skills">
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>JavaScript</li>
-                <li>Python</li>
-                <li>C</li>
-                <li>C++</li>
-                <li>Scala</li>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">Max Lakhman</div>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
-            <p>I'd like to work for a company helping clients achieve their goals and in the process learning more about front end developement. Ideally, the job would have some element of problem solving involved in it. </p>
         </div>
-    </main>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-label">Software Developer</div>
+                <h1>Building interfaces that <em>work</em> and look good doing it</h1>
+                <p class="hero-description">
+                    Front-end focused developer with full-stack experience. I create clean, functional solutions and find satisfaction in seeing projects come to life.
+                </p>
+                <div class="hero-meta">
+                    <span>
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="6" cy="6" r="3" fill="currentColor"/>
+                        </svg>
+                        Buffalo, New York
+                    </span>
+                    <span>
+                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="6" cy="6" r="3" fill="#22c55e"/>
+                        </svg>
+                        Open to Relocation
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">About</div>
+                <h2 class="section-title">Background & approach</h2>
+            </div>
+            
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        I discovered programming in high school through a Python elective. After learning the syntax and building my first applications, I knew this was what I wanted to do.
+                    </p>
+                    <p>
+                        My focus is front-end development, though I work comfortably across the stack. The most rewarding part of programming for me is seeing the finished product—the moment where all the problem-solving and iteration comes together into something functional and polished.
+                    </p>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">2+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">35%</div>
+                        <div class="stat-label">Performance Gain</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Projects Shipped</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Skills</div>
+                <h2 class="section-title">Technologies & capabilities</h2>
+            </div>
+            
+            <div class="skills-grid">
+                <div class="skill-tag">HTML</div>
+                <div class="skill-tag">CSS</div>
+                <div class="skill-tag">JavaScript</div>
+                <div class="skill-tag">Python</div>
+                <div class="skill-tag">C</div>
+                <div class="skill-tag">C++</div>
+                <div class="skill-tag">Scala</div>
+            </div>
+            
+            <p class="skills-description">
+                Currently focused on deepening expertise in front-end development while expanding versatility across the stack. Looking for opportunities that combine client-focused work with problem-solving challenges.
+            </p>
+        </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Experience</div>
+                <h2 class="section-title">Professional work</h2>
+            </div>
+            
+            <div class="experience-list">
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3 class="experience-title"> Freelance Software Developer</h3>
+                        <div class="experience-company">Clocky</div>
+                    </div>
+                    <ul>
+                        <li>Designed and engineered web scraping algorithms to compile counterfeit products, resulting in 35% growth in detection accuracy</li>
+                        <li>Utilized, integrated, and maintained WebSocket connections to improve stability and performance</li>
+                        <li>Implemented automated testing procedures, reducing bug count by 20%</li>
+                        <li>Resolved technical issues and optimized codebase to enhance system efficiency and user experience</li>
+                    </ul>
+                </div>
+                
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3 class="experience-title">Platform Specialist</h3>
+                        <div class="experience-company">Ingram Micro/Robert Half</div>
+                    </div>
+                    <ul>
+                        <li>Helped improve quoting workflows by using internal platforms and tools to make the 
+process faster and more accurate</li>
+                        <li>Worked with technical teams to connect and maintain systems that support quoting and 
+platform operations </li>
+                        <li>Managed and delegated requests through our platform, using ticketing tools and 
+automation to keep things organized and efficient</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Projects</div>
+                <h2 class="section-title">Selected work</h2>
+            </div>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-category">Personal</div>
+                    <h3 class="project-title">Python Quiz Application</h3>
+                    <p class="project-description">
+                        Built a quiz application to reinforce coursework concepts. Focused on code organization, refactoring practices, and maintaining programming skills between academic sessions.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">Education</span>
+                        <span class="project-tag">Github</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-category">Personal</div>
+                    <h3 class="project-title">eCommerce Website</h3>
+                    <p class="project-description">
+                        Designed and implemented an eCommerce website to gain hands-on experience with user experience principles, front-end development fundamentals and responsive design principles.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML</span>
+                        <span class="project-tag">CSS</span>
+                        <span class="project-tag">TypeScript</span>
+                        <span class="project-tag">Figma</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-category">Personal</div>
+                    <h3 class="project-title">Idle Game App</h3>
+                    <p class="project-description">
+                        Created an idle game application focusing on engaging UI/UX design and smooth gameplay mechanics. Gained experience in front-end frameworks and state management.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">HTML</span>
+                        <span class="project-tag">CSS</span>
+                        <span class="project-tag">TypeScript</span>
+                        <span class="project-tag">UX</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-category">Systems Programming — Fall 2022</div>
+                    <h3 class="project-title">Memory Allocator</h3>
+                    <p class="project-description">
+                        Manually implemented malloc, calloc, and realloc C library functions. Utilized sorted priority queue data structure for heap memory management optimization.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">C</span>
+                        <span class="project-tag">Memory Management</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-category">Data Structures — Spring 2022</div>
+                    <h3 class="project-title">Data Processing System</h3>
+                    <p class="project-description">
+                        Combined and sorted two large real-world datasets in Python. Implemented hash table data structures to design efficient algorithms for large-scale data processing.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">Hash Tables</span>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-category">Algorithms — Spring 2023</div>
+                    <h3 class="project-title">Network Pathfinding</h3>
+                    <p class="project-description">
+                        Simulated internet network pathfinding algorithm. Designed shortest path solution between ISP and client nodes in a graph, accounting for bandwidth constraints using modified BFS.
+                    </p>
+                    <div class="project-tags">
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">Graph Theory</span>
+                        <span class="project-tag">BFS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Contact</div>
+                <h2 class="section-title">Let's connect</h2>
+            </div>
+            
+            <div class="contact-content">
+                <p class="contact-text">
+                    Open to full-time opportunities, freelance projects, and collaborations. If you're looking for a developer who cares about both functionality and aesthetics, let's talk.
+                </p>
+                
+                <div class="contact-links">
+                    <a href="mailto:lakhmanmax@yahoo.com" class="contact-link">Email</a>
+                    <a href="https://linkedin.com/in/max-singh-lakhman" class="contact-link">LinkedIn</a>
+                    <a href="https://github.com/maxLakhman" class="contact-link">GitHub</a>
+                    <a href="Resume.pdf" class="contact-link">Resume</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2026 Max Singh-Lakhman</p>
+            <a href="#" class="back-to-top">Back to top ↑</a>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('nav ul');
+        
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close menu when clicking a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Smooth scroll active state
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('nav a');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.style.color = '';
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.style.color = 'var(--color-accent)';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
-
